@@ -1,4 +1,4 @@
-[Read this in English](#-chibata-fm-en)
+[Read this in English](#chibata-fm-en)
 
 # Chibata FM (Full-Stack)
 
