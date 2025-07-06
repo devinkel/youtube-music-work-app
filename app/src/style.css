@@ -76,6 +76,7 @@ html {
     font-size: 1rem;
     cursor: pointer;
     transition: box-shadow 0.2s;
+    min-height: 40px;
 }
 
 .btn:disabled {
@@ -288,4 +289,15 @@ html {
 
 .footer img {
     opacity: 0.5;
+}
+
+.card.email-verify {
+    position: relative;
+    justify-content: center;
+    align-items: center;
+}
+
+.card.email-verify .msg-error {
+    position: absolute;
+    bottom: -30px;
 }

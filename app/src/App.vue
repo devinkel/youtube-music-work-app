@@ -5,7 +5,32 @@
         Chibata FM.
     </h1>
 
-    <div class="card">
+    <div class="card email-verify" v-if="!emailValid">
+        <input
+        v-model="email"
+        @keyup.enter="checkEmail"
+        type="email"
+        placeholder="✉️ Digite seu e-mail"
+        class="text-field"
+        />
+        <button
+        @click="checkEmail"
+        :disabled="!email.trim()"
+        class="btn"
+        >
+            <div v-if="searching" class="radio-loader">
+                <span class="wave wave1"></span>
+                <span class="wave wave2"></span>
+                <span class="wave wave3"></span>
+            </div>
+            <span v-else>Verificar</span>
+        </button>
+        <p v-if="emailError" class="msg-error">
+            ❌ {{ emailError }}
+        </p>
+    </div>
+
+    <div v-else class="card">
         <input
         v-model="input"
         @keyup.enter="searchSongs"
@@ -57,6 +82,9 @@ export default {
     name: 'App',
     data() {
         return {
+            email: '',
+            emailValid: false,
+            emailError: '',
             input: '',
             results: [],
             searching: false,
@@ -66,6 +94,15 @@ export default {
         }
     },
     methods: {
+        checkEmail() {
+            const domain = import.meta.env.VITE_WORK_EMAIL_DOMAIN
+            if (this.email.trim().toLowerCase().endsWith(domain)) {
+                this.emailValid = true
+                this.emailError = ''
+            } else {
+                this.emailError = `Ops, parece que você não trabalha aqui`
+            }
+        },
         async searchSongs() {
             if (this.searching || !this.input.trim()) return
             this.searching = true
