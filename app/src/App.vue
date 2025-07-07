@@ -71,7 +71,7 @@
     </p>
 </main>
 <footer class="footer">
-    <a href="https://github.com/devinkel" target="_blank">
+    <a href="https://github.com/devinkel/youtube-music-work-app" target="_blank">
         <img width="40" src="./assets/k.svg" alt="logo" />
     </a>
 </footer>
