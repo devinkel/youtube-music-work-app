@@ -107,6 +107,8 @@ Inside the `app/` directory, run:
 
      * `VITE_API_URL` = `https://<your-worker>.workers.dev`
 
+     * `VITE_WORK_EMAIL_DOMAIN` = `@yourcompany.email`
+
 5. **Deploy**
 
    * Save and wait for the Pages build to finish.
