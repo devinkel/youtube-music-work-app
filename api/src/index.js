@@ -129,4 +129,47 @@ app.post('/add-song', async c => {
   }
 })
 
+app.get('/queue', async c => {
+  const token = await getAccessToken(c.env)
+  let items = []
+  let pageToken = ''
+  do {
+    const url = new URL('https://www.googleapis.com/youtube/v3/playlistItems')
+    url.search = new URLSearchParams({
+      part: 'snippet',
+      playlistId: c.env.PLAYLIST_ID,
+      maxResults: '50',
+      pageToken
+    }).toString()
+    const res = await fetch(url.toString(), { headers: { Authorization: `Bearer ${token}` } })
+    const data = await res.json()
+    items.push(...(data.items || []))
+    pageToken = data.nextPageToken || ''
+  } while (pageToken)
+  // Retorna apenas os campos necessários
+  const formatted = items.map(i => ({
+    playlistItemId: i.id,
+    videoId: i.snippet.resourceId.videoId,
+    title: i.snippet.title,
+    thumbnail: i.snippet.thumbnails.default.url
+  }))
+  return c.json({ items: formatted })
+})
+
+// POST /delete-song
+app.post('/delete-song', async c => {
+  const { playlistItemId } = await c.req.json()
+  if (!playlistItemId) return c.json({ error: 'playlistItemId é obrigatório' }, 400)
+  try {
+    const token = await getAccessToken(c.env)
+    await fetch(
+      `https://www.googleapis.com/youtube/v3/playlistItems?id=${playlistItemId}`,
+      { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } }
+    )
+    return c.json({ success: true })
+  } catch (err) {
+    return c.json({ error: err.message }, 500)
+  }
+})
+
 export default app

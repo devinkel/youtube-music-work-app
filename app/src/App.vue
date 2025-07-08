@@ -165,12 +165,15 @@ export default {
             }
             window.onYouTubeIframeAPIReady = () => {
                 this.player = new YT.Player('yt-player', {
-                    height: '0', width: '0',  // invisível
+                    height: '0', width: '0',
+                    host: 'https://www.youtube.com',
                     playerVars: {
                         listType: 'playlist',
                         list: import.meta.env.VITE_PLAYLIST_ID,
                         autoplay: 1,
                         controls: 0,
+                        enablejsapi: 1,
+                        origin: window.location.origin
                     },
                     events: { onStateChange: this.onPlayerStateChange }
                 })
