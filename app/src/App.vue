@@ -165,8 +165,8 @@ export default {
             }
             window.onYouTubeIframeAPIReady = () => {
                 this.player = new YT.Player('yt-player', {
-                    height: '0', width: '0',
-                    host: 'https://www.youtube.com',
+                    height: '0',
+                    width: '0',
                     playerVars: {
                         listType: 'playlist',
                         list: import.meta.env.VITE_PLAYLIST_ID,
